@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://${SPRING.DATASOURCE.HOST}:${SPRING.DATASOURCE.PORT}/coffee_db?currentSchema=coffee
+    username: ${SPRING.DATASOURCE.USERNAME}
+    password: ${SPRING.DATASOURCE.PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+  flyway:
+    enabled: true
+  config:
+    import: optional:file:.env.yml
+
+server:
+  port: 8087
