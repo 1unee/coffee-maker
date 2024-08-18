@@ -11,8 +11,8 @@ import lombok.experimental.SuperBuilder;
  */
 @MappedSuperclass
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @SuperBuilder
 @Getter
 @ToString

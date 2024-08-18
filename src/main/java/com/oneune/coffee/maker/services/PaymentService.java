@@ -24,7 +24,13 @@ public class PaymentService {
     PaymentReader paymentReader;
 
     public PaymentDto beginPayment(ProductDto product) {
-        return new PaymentDto(product, product.getPrice(), Instant.now(), false, "Waiting");
+        return PaymentDto.builder()
+                .product(product)
+                .total(product.getPrice())
+                .timestamp(Instant.now())
+                .success(false)
+                .message("Waiting")
+                .build();
     }
 
     @Transactional

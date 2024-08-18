@@ -2,7 +2,6 @@ package com.oneune.coffee.maker.entities;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -15,8 +14,7 @@ import java.time.Instant;
 @Table(name = "payment")
 @SequenceGenerator(sequenceName = "payment_id_seq", name = "id_seq", allocationSize = 1)
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @SuperBuilder
 @Data
 public class PaymentEntity extends AbstractEntity {

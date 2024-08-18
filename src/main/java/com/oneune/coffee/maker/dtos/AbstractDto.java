@@ -6,8 +6,8 @@ import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @SuperBuilder
 @Data
 public abstract class AbstractDto implements Identifiable {

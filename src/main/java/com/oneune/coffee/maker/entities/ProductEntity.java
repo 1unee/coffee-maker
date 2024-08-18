@@ -16,8 +16,7 @@ import java.util.List;
 @Table(name = "product")
 @SequenceGenerator(sequenceName = "product_id_seq", name = "id_seq", allocationSize = 1)
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @SuperBuilder
 @Data
 public class ProductEntity extends AbstractEntity {

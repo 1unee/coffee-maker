@@ -12,8 +12,7 @@ import java.math.BigDecimal;
 @Table(name = "quantity")
 @SequenceGenerator(sequenceName = "quantity_id_seq", name = "id_seq", allocationSize = 1)
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @SuperBuilder
 @Data
 public class QuantityEntity extends AbstractEntity {

@@ -15,8 +15,7 @@ import java.math.BigDecimal;
 @Table(name = "rule")
 @SequenceGenerator(sequenceName = "rule_id_seq", name = "id_seq", allocationSize = 1)
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @SuperBuilder
 @Data
 public class RuleEntity extends AbstractEntity {
