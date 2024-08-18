@@ -53,4 +53,9 @@ public class ProductController implements CRUDable<ProductDto> {
     public ProductDto getByName(@PathVariable(name = "product-name") String productName) {
         return productService.getByName(productName);
     }
+
+    @GetMapping("popular")
+    public ProductDto getTheMostPopular() {
+        return productService.getTheMostPopular();
+    }
 }

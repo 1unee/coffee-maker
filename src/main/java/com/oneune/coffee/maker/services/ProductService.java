@@ -1,6 +1,7 @@
 package com.oneune.coffee.maker.services;
 
 import com.oneune.coffee.maker.contracts.CRUDable;
+import com.oneune.coffee.maker.dtos.PaymentDto;
 import com.oneune.coffee.maker.dtos.ProductDto;
 import com.oneune.coffee.maker.entities.ProductEntity;
 import com.oneune.coffee.maker.readers.ProductReader;
@@ -12,6 +13,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -24,6 +26,7 @@ public class ProductService implements CRUDable<ProductDto> {
     ProductReader productReader;
     MaterialService materialService;
     QuantityService quantityService;
+    PaymentService paymentService;
 
     @Transactional
     @Override
@@ -63,9 +66,21 @@ public class ProductService implements CRUDable<ProductDto> {
 
     public ProductDto getByName(String productName) {
         ProductDto product = productReader.getByName(productName);
+        PaymentDto payment = paymentService.beginPayment(product);
+
         boolean quantitiesValidationResult = quantityService.validate(product.getRules());
-        if (!quantitiesValidationResult) throw new IllegalStateException("Not enough materials!");
+        if (!quantitiesValidationResult) {
+            String errorMessage = "Not enough materials!";
+            paymentService.finishPayment(payment, false, errorMessage);
+            throw new IllegalStateException(errorMessage);
+        }
+
         quantityService.spend(product.getRules());
+        paymentService.finishPayment(payment, true, "Finished at %s".formatted(LocalDateTime.now()));
         return productReader.getByName(productName);
+    }
+
+    public ProductDto getTheMostPopular() {
+        return paymentService.getTheMostPopular();
     }
 }

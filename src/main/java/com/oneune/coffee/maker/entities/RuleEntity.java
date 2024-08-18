@@ -13,7 +13,7 @@ import java.math.BigDecimal;
  */
 @Entity
 @Table(name = "rule")
-@SequenceGenerator(sequenceName = "product_id_seq", name = "id_seq", allocationSize = 1)
+@SequenceGenerator(sequenceName = "rule_id_seq", name = "id_seq", allocationSize = 1)
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @AllArgsConstructor

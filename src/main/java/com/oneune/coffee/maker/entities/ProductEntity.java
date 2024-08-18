@@ -5,6 +5,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +23,7 @@ import java.util.List;
 public class ProductEntity extends AbstractEntity {
 
     String name;
+    BigDecimal price;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     List<RuleEntity> rules = new ArrayList<>();
