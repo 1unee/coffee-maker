@@ -1,5 +1,6 @@
 package com.oneune.coffee.maker.controllers;
 
+import com.oneune.coffee.maker.aop.annotations.Security;
 import com.oneune.coffee.maker.contracts.CRUDable;
 import com.oneune.coffee.maker.dtos.QuantityDto;
 import com.oneune.coffee.maker.services.QuantityService;
@@ -19,6 +20,7 @@ public class QuantityController implements CRUDable<QuantityDto> {
     QuantityService quantityService;
 
     @PostMapping
+    @Security
     @Override
     public QuantityDto post(@RequestBody QuantityDto quantity) {
         return quantityService.post(quantity);
@@ -37,12 +39,14 @@ public class QuantityController implements CRUDable<QuantityDto> {
     }
 
     @PutMapping("{quantity-id}")
+    @Security
     @Override
     public QuantityDto put(@PathVariable(name = "quantity-id") Long quantityId, QuantityDto quantity) {
         return quantityService.put(quantityId, quantity);
     }
 
     @DeleteMapping("{quantity-id}")
+    @Security
     @Override
     public QuantityDto deleteById(@PathVariable(name = "quantity-id") Long quantityId) {
         return quantityService.deleteById(quantityId);

@@ -6,13 +6,13 @@ CREATE SEQUENCE payment_id_seq INCREMENT BY 1 START WITH 1;
 
 CREATE TABLE material (
     id BIGINT PRIMARY KEY DEFAULT nextval('material_id_seq'),
-    name VARCHAR(255) NOT NULL
+    name VARCHAR(255) UNIQUE NOT NULL
 );
 
 CREATE TABLE product (
     id BIGINT PRIMARY KEY DEFAULT nextval('product_id_seq'),
     price DECIMAL(8, 3) NOT NULL,
-    name VARCHAR(255) NOT NULL
+    name VARCHAR(255) UNIQUE NOT NULL
 );
 
 CREATE TABLE quantity (

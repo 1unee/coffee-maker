@@ -24,7 +24,6 @@ public class ProductService implements CRUDable<ProductDto> {
     ModelMapper modelMapper;
     ProductRepository productRepository;
     ProductReader productReader;
-    MaterialService materialService;
     QuantityService quantityService;
     PaymentService paymentService;
 

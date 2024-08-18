@@ -1,7 +1,9 @@
 package com.oneune.coffee.maker.controllers;
 
+import com.oneune.coffee.maker.aop.annotations.Security;
 import com.oneune.coffee.maker.contracts.CRUDable;
 import com.oneune.coffee.maker.dtos.ProductDto;
+import com.oneune.coffee.maker.dtos.RuleDto;
 import com.oneune.coffee.maker.services.ProductService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -18,8 +20,8 @@ public class ProductController implements CRUDable<ProductDto> {
 
     ProductService productService;
 
-    // todo: разрешить создание только по роли
     @PostMapping
+    @Security
     @Override
     public ProductDto post(@RequestBody ProductDto product) {
         return productService.post(product);
@@ -38,12 +40,14 @@ public class ProductController implements CRUDable<ProductDto> {
     }
 
     @PutMapping("{product-id}")
+    @Security
     @Override
     public ProductDto put(@PathVariable(name = "product-id") Long productId, @RequestBody ProductDto product) {
         return productService.put(productId, product);
     }
 
     @DeleteMapping("{product-id}")
+    @Security
     @Override
     public ProductDto deleteById(@PathVariable(name = "product-id") Long productId) {
         return productService.deleteById(productId);
@@ -57,5 +61,11 @@ public class ProductController implements CRUDable<ProductDto> {
     @GetMapping("popular")
     public ProductDto getTheMostPopular() {
         return productService.getTheMostPopular();
+    }
+
+    @PostMapping("{product-name}/rules")
+    public ProductDto create(@PathVariable(name = "product-name") String productName,
+                             @RequestBody List<RuleDto> rules) {
+        return productService.post(ProductDto.builder().name(productName).rules(rules).build());
     }
 }
