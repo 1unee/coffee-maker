@@ -2,15 +2,15 @@ package com.oneune.coffee.maker.services;
 
 import com.oneune.coffee.maker.contracts.CRUDable;
 import com.oneune.coffee.maker.dtos.ProductDto;
-import com.oneune.coffee.maker.dtos.RuleDto;
+import com.oneune.coffee.maker.entities.ProductEntity;
 import com.oneune.coffee.maker.readers.ProductReader;
-import com.oneune.coffee.maker.repositories.MaterialRepository;
 import com.oneune.coffee.maker.repositories.ProductRepository;
-import com.oneune.coffee.maker.repositories.RuleRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -19,46 +19,53 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProductService implements CRUDable<ProductDto> {
 
-    ProductReader productReader;
+    ModelMapper modelMapper;
     ProductRepository productRepository;
-    MaterialRepository materialRepository;
-    RuleRepository ruleRepository;
+    ProductReader productReader;
+    MaterialService materialService;
+    QuantityService quantityService;
 
+    @Transactional
     @Override
     public ProductDto post(ProductDto productDto) {
-        return null;
+        ProductEntity productEntity = modelMapper.map(productDto, ProductEntity.class);
+        productRepository.saveAndFlush(productEntity);
+        return productReader.get(productEntity.getId());
     }
 
     @Override
     public ProductDto getById(Long productId) {
-        return null;
+        return productReader.get(productId);
     }
 
     @Override
     public List<ProductDto> search(int page, int size) {
-        return null;
+        return productReader.search(page, size);
     }
 
+    @Transactional
     @Override
     public ProductDto put(Long productId, ProductDto productDto) {
-        return null;
+        ProductEntity productEntity = productReader.getEntity(productId);
+        modelMapper.map(productDto, productEntity);
+        productRepository.saveAndFlush(productEntity);
+        return productReader.get(productId);
     }
 
+    @Transactional
     @Override
     public ProductDto deleteById(Long productId) {
-        return null;
+        ProductDto product = productReader.get(productId);
+        productRepository.deleteById(productId);
+        productRepository.flush();
+        return product;
     }
 
     public ProductDto getByName(String productName) {
         ProductDto product = productReader.getByName(productName);
-        return null;
-    }
-
-    public void validate(RuleDto rule) {
-
-    }
-
-    public ProductDto make(ProductDto product) {
-        return null;
+        boolean quantitiesValidationResult = quantityService.validate(product.getRules());
+        if (!quantitiesValidationResult) throw new IllegalStateException("Not enough materials!");
+        quantityService.spend(product.getRules());
+        return productReader.getByName(productName);
     }
 }

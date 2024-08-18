@@ -1,38 +1,34 @@
--- Вставка данных в таблицу Product
+-- Вставка материалов (ингредиентов)
+INSERT INTO material (name) VALUES ('Coffee Beans');
+INSERT INTO material (name) VALUES ('Water');
+INSERT INTO material (name) VALUES ('Milk');
+INSERT INTO material (name) VALUES ('Sugar');
+
+-- Вставка продуктов (напитков)
 INSERT INTO product (name) VALUES ('Espresso');
-INSERT INTO product (name) VALUES ('Americano');
+INSERT INTO product (name) VALUES ('Latte');
 INSERT INTO product (name) VALUES ('Cappuccino');
 
--- Вставка данных в таблицу Material
-INSERT INTO material (name, measure_type, multiplier_relative_measure_type, amount)
-VALUES ('Coffee Beans', 'KILOGRAM', 0.001, 18.00);
+-- Вставка количества (например, для упаковки кофе)
+INSERT INTO quantity (material_id, measure_type, multiplier, amount)
+VALUES ((SELECT id FROM material WHERE name = 'Coffee Beans'), 'KILOGRAM', 1.0, 1.0);
 
-INSERT INTO material (name, measure_type, multiplier_relative_measure_type, amount)
-VALUES ('Water', 'LITER', 0.001, 30.00);
+-- Вставка правил для Espresso
+INSERT INTO rule (product_id, material_id, measure_type, multiplier, amount)
+VALUES
+    ((SELECT id FROM product WHERE name = 'Espresso'), (SELECT id FROM material WHERE name = 'Coffee Beans'), 'KILOGRAM', 1.0, 18.0),
+    ((SELECT id FROM product WHERE name = 'Espresso'), (SELECT id FROM material WHERE name = 'Water'), 'LITER', 1.0, 0.05);
 
-INSERT INTO material (name, measure_type, multiplier_relative_measure_type, amount)
-VALUES ('Milk', 'LITER', 0.001, 150.00);
+-- Вставка правил для Latte
+INSERT INTO rule (product_id, material_id, measure_type, multiplier, amount)
+VALUES
+    ((SELECT id FROM product WHERE name = 'Latte'), (SELECT id FROM material WHERE name = 'Coffee Beans'), 'KILOGRAM', 1.0, 18.0),
+    ((SELECT id FROM product WHERE name = 'Latte'), (SELECT id FROM material WHERE name = 'Water'), 'LITER', 1.0, 0.05),
+    ((SELECT id FROM product WHERE name = 'Latte'), (SELECT id FROM material WHERE name = 'Milk'), 'LITER', 1.0, 0.2);
 
--- Вставка данных в таблицу Rule
-INSERT INTO rule (product_id, name, description) VALUES (1, 'Espresso Preparation', 'Use fine ground coffee.');
-INSERT INTO rule (product_id, name, description) VALUES (2, 'Americano Preparation', 'Add hot water to espresso.');
-INSERT INTO rule (product_id, name, description) VALUES (3, 'Cappuccino Preparation', 'Steam and froth milk.');
-
--- Вставка данных в таблицу RuleMaterialLink
-INSERT INTO rule_material_link (rule_id, material_id, timestamp)
-VALUES (1, 1, CURRENT_TIMESTAMP);
-
-INSERT INTO rule_material_link (rule_id, material_id, timestamp)
-VALUES (1, 2, CURRENT_TIMESTAMP);
-
-INSERT INTO rule_material_link (rule_id, material_id, timestamp)
-VALUES (2, 1, CURRENT_TIMESTAMP);
-
-INSERT INTO rule_material_link (rule_id, material_id, timestamp)
-VALUES (2, 2, CURRENT_TIMESTAMP);
-
-INSERT INTO rule_material_link (rule_id, material_id, timestamp)
-VALUES (3, 1, CURRENT_TIMESTAMP);
-
-INSERT INTO rule_material_link (rule_id, material_id, timestamp)
-VALUES (3, 3, CURRENT_TIMESTAMP);
+-- Вставка правил для Cappuccino
+INSERT INTO rule (product_id, material_id, measure_type, multiplier, amount)
+VALUES
+    ((SELECT id FROM product WHERE name = 'Cappuccino'), (SELECT id FROM material WHERE name = 'Coffee Beans'), 'KILOGRAM', 1.0, 18.0),
+    ((SELECT id FROM product WHERE name = 'Cappuccino'), (SELECT id FROM material WHERE name = 'Water'), 'LITER', 1.0, 0.05),
+    ((SELECT id FROM product WHERE name = 'Cappuccino'), (SELECT id FROM material WHERE name = 'Milk'), 'LITER', 1.0, 0.15);

@@ -1,24 +1,23 @@
 package com.oneune.coffee.maker.dtos;
 
-import com.oneune.coffee.maker.contracts.LinkEntityId;
+import com.oneune.coffee.maker.enums.MeasureType;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
-import org.javatuples.Pair;
 
-import java.time.Instant;
+import java.math.BigDecimal;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
 @Data
-public class ProductMaterialLinkDto {
-    LinkEntityId<Long, Long> id;
-    RuleDto rule;
+public class QuantityDto extends AbstractDto {
     MaterialDto material;
-    Instant timestamp = Instant.now();
+    MeasureType measureType;
+    BigDecimal multiplier;
+    BigDecimal amount;
 }

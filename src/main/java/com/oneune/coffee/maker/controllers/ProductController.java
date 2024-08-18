@@ -49,7 +49,7 @@ public class ProductController implements CRUDable<ProductDto> {
         return productService.deleteById(productId);
     }
 
-    @GetMapping("/names/{product-name}")
+    @GetMapping("names/{product-name}")
     public ProductDto getByName(@PathVariable(name = "product-name") String productName) {
         return productService.getByName(productName);
     }

@@ -1,7 +1,9 @@
 package com.oneune.coffee.maker.entities;
 
-import com.oneune.coffee.maker.enums.MeasureType;
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,8 +11,9 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
 
-import java.math.BigDecimal;
-
+/**
+ * Material class
+ */
 @Entity
 @Table(name = "material")
 @SequenceGenerator(sequenceName = "material_id_seq", name = "id_seq", allocationSize = 1)
@@ -21,8 +24,4 @@ import java.math.BigDecimal;
 @Data
 public class MaterialEntity extends AbstractEntity {
     String name;
-    @Enumerated(EnumType.STRING)
-    MeasureType measureType;
-    BigDecimal multiplierRelativeMeasureType;
-    BigDecimal amount;
 }

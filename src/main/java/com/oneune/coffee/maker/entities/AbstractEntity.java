@@ -6,10 +6,10 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
 
-import java.io.Serializable;
-
+/**
+ * Abstract class contains Long ID field.
+ */
 @MappedSuperclass
-@Embeddable
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @AllArgsConstructor

@@ -17,5 +17,5 @@ import java.util.List;
 @Data
 public class ProductDto extends AbstractDto {
     String name;
-    RuleDto rule;
+    List<RuleDto> rules;
 }

@@ -8,22 +8,15 @@ import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
 
-/**
- * Rule class
- */
 @Entity
-@Table(name = "rule")
-@SequenceGenerator(sequenceName = "product_id_seq", name = "id_seq", allocationSize = 1)
+@Table(name = "quantity")
+@SequenceGenerator(sequenceName = "quantity_id_seq", name = "id_seq", allocationSize = 1)
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
 @Data
-public class RuleEntity extends AbstractEntity {
-
-    @ManyToOne
-    @ToString.Exclude
-    ProductEntity product;
+public class QuantityEntity extends AbstractEntity {
 
     @OneToOne
     @JoinColumn(name = "material_id")
